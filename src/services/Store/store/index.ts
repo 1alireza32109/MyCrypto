@@ -57,3 +57,4 @@ export {
   getInactivityTimer,
   setInactivityTimer
 } from './settings.slice';
+export { scanTokens, isScanning } from './tokenScanning.slice';
