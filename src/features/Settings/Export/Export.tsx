@@ -1,12 +1,13 @@
 import React from 'react';
 
 import { Typography } from '@mycrypto/ui';
+import { exportState, useSelector } from '@store';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Button, ContentPanel, Downloader, RouterLink } from '@components';
 import { ROUTE_PATHS } from '@config';
-import { useSettings, useUserActions } from '@services/Store';
+import { useUserActions } from '@services/Store';
 import { COLORS } from '@theme';
 import translate, { translateRaw } from '@translations';
 import { ACTION_NAME, ACTION_STATE } from '@types';
@@ -30,8 +31,8 @@ const CacheDisplay = styled.code`
 export function Export(props: RouteComponentProps) {
   const { history } = props;
   const onBack = history.goBack;
-  const { exportStorage } = useSettings();
-  const data = exportStorage();
+  const appState = useSelector(exportState);
+
   const { updateUserAction, findUserAction } = useUserActions();
 
   const backupAction = findUserAction(ACTION_NAME.BACKUP);
@@ -40,14 +41,14 @@ export function Export(props: RouteComponentProps) {
     <CenteredContentPanel onBack={onBack} heading={translateRaw('SETTINGS_EXPORT_HEADING')}>
       <ImportSuccessContainer>
         <Typography>{translate('SETTINGS_EXPORT_INFO')}</Typography>
-        <CacheDisplay>{data}</CacheDisplay>
+        <CacheDisplay data-testid="export-json-display">{appState}</CacheDisplay>
         <RouterLink fullwidth={true} to={ROUTE_PATHS.SETTINGS.path}>
           <Button color={COLORS.WHITE} fullwidth={true}>
             {translate('SETTINGS_EXPORT_LEAVE')}
           </Button>
         </RouterLink>
         <Downloader
-          data={data}
+          data={appState}
           onClick={() =>
             backupAction &&
             updateUserAction(backupAction.uuid, { ...backupAction, state: ACTION_STATE.COMPLETED })
