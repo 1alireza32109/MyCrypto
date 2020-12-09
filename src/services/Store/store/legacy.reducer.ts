@@ -8,6 +8,7 @@ import accountSlice, {
   createAccounts,
   destroyAccount,
   updateAccount,
+  updateAccountAssets,
   updateAccounts
 } from './account.slice';
 import assetSlice, {
@@ -160,7 +161,8 @@ const legacyReducer: Reducer<DataStore, ActionV> = (state = initialLegacyState, 
     case createAccounts.type:
     case updateAccount.type:
     case updateAccounts.type:
-    case destroyAccount.type: {
+    case destroyAccount.type:
+    case updateAccountAssets.type: {
       return {
         ...state,
         [LSKeys.ACCOUNTS]: accountSlice.reducer(state.accounts, action)
