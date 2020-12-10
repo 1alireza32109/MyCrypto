@@ -41,14 +41,14 @@ export function Export(props: RouteComponentProps) {
     <CenteredContentPanel onBack={onBack} heading={translateRaw('SETTINGS_EXPORT_HEADING')}>
       <ImportSuccessContainer>
         <Typography>{translate('SETTINGS_EXPORT_INFO')}</Typography>
-        <CacheDisplay data-testid="export-json-display">{appState}</CacheDisplay>
+        <CacheDisplay data-testid="export-json-display">{JSON.stringify(appState)}</CacheDisplay>
         <RouterLink fullwidth={true} to={ROUTE_PATHS.SETTINGS.path}>
           <Button color={COLORS.WHITE} fullwidth={true}>
             {translate('SETTINGS_EXPORT_LEAVE')}
           </Button>
         </RouterLink>
         <Downloader
-          data={appState}
+          data={JSON.stringify(appState)}
           onClick={() =>
             backupAction &&
             updateUserAction(backupAction.uuid, { ...backupAction, state: ACTION_STATE.COMPLETED })
