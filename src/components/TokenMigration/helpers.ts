@@ -1,4 +1,4 @@
-import { getAssetByUUID } from '@services';
+import { getAssetByUUID } from '@services/Store';
 import { ITokenMigrationConfig, ITxConfig, ITxObject, StoreAccount } from '@types';
 import { hexToString, hexWeiToString } from '@utils';
 
